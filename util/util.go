@@ -9,3 +9,5 @@ const (
 	Left
 	Right
 )
+
+const Timeconst = 100000

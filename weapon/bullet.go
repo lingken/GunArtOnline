@@ -30,7 +30,6 @@ func NewBullet(posX, posY, damage, speed, rangeLeft int, direction util.Directio
 		rangeLeft: 30,
 		entity:    tl.NewEntity(posX, posY, 1, 1),
 		debug:     debug,
-		frame:     0,
 		game:      game,
 	}
 	bullet.entity.SetCell(0, 0, &tl.Cell{Fg: tl.ColorBlack, Ch: 'o'})
@@ -38,7 +37,7 @@ func NewBullet(posX, posY, damage, speed, rangeLeft int, direction util.Directio
 }
 
 func (bullet *Bullet) Draw(s *tl.Screen) {
-	if bullet.frame < 2000 {
+	if bullet.speed == 0 || bullet.frame < util.Timeconst/bullet.speed {
 		bullet.frame += 1
 		bullet.entity.Draw(s)
 		return

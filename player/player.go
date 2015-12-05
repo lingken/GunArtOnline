@@ -64,7 +64,7 @@ func (p *Player) Tick(event tl.Event) {
 				bX += 1
 				break
 			}
-			bullet := weapon.NewBullet(bX, bY, 0, 0, 10, p.direction, p.debug, p.game)
+			bullet := weapon.NewBullet(bX, bY, 0, 200, 10, p.direction, p.debug, p.game)
 			// p.game.Screen().AddEntity(bullet)
 			p.game.Screen().Level().AddEntity(bullet)
 		}

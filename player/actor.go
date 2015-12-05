@@ -17,6 +17,7 @@ type Actor struct {
 	HP        int // health point
 	MP        int // mana point
 	speed     int
+	frame     int
 	direction util.Direction
 	entity    *tl.Entity
 	state     ActorState
