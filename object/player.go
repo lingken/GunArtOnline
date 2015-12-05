@@ -22,8 +22,7 @@ func NewPlayer(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug 
 func (p *Player) Tick(event tl.Event) {
 	if event.Type == tl.EventKey {
 		p.prevX, p.prevY = p.entity.Position()
-		prevX := p.prevX
-		prevY := p.prevY
+		prevX, prevY := p.entity.Position()
 		switch event.Key {
 		case tl.KeyArrowRight:
 			p.entity.SetPosition(prevX+1, prevY)
