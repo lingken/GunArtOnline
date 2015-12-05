@@ -1,8 +1,9 @@
-package player
+package object
 
 import (
 	"GunArtOnline/message"
 	"GunArtOnline/util"
+	// "fmt"
 	tl "github.com/JoelOtter/termloop"
 	"math/rand"
 )
@@ -21,6 +22,14 @@ func NewEnemy(name string, HP, MP, speed, posX, posY, hatred int, game *tl.Game,
 	}
 	enemy.entity.SetCell(0, 0, &tl.Cell{Fg: tl.ColorBlack, Ch: 'E'})
 	return &enemy
+}
+
+func (enemy *Enemy) Hit(bullet *Bullet) {
+	enemy.HP -= bullet.Damage
+	enemy.debug.AddInfo(fmt.Sprintf("Enemy Hit remain HP: %d\n", enemy.HP))
+	if enemy.HP <= 0 {
+		enemy.game.Screen().Level().RemoveEntity(enemy)
+	}
 }
 
 func (enemy *Enemy) Draw(s *tl.Screen) {

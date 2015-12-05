@@ -1,4 +1,4 @@
-package weapon
+package object
 
 type Weapon struct {
 	name   string

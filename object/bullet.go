@@ -1,8 +1,7 @@
-package weapon
+package object
 
 import (
 	"GunArtOnline/message"
-	"GunArtOnline/player"
 	"GunArtOnline/util"
 	tl "github.com/JoelOtter/termloop"
 )
@@ -78,7 +77,7 @@ func (bullet *Bullet) Size() (int, int) {
 }
 
 func (bullet *Bullet) Collide(collision tl.Physical) {
-	if v, ok := collision.(*player.Actor); ok {
+	if v, ok := collision.(*Enemy); ok {
 		v.Hit(bullet)
 	}
 	bullet.game.Screen().Level().RemoveEntity(bullet)

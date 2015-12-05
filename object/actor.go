@@ -1,9 +1,9 @@
-package player
+package object
 
 import (
 	"GunArtOnline/message"
 	"GunArtOnline/util"
-	"GunArtOnline/weapon"
+	"fmt"
 	tl "github.com/JoelOtter/termloop"
 )
 
@@ -47,11 +47,12 @@ func NewActor(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug *
 	return &actor
 }
 
-func (actor *Actor) Hit(damage int) {
-	actor.HP -= damage
-	if actor.HP <= 0 {
-		actor.game.Screen().Level().RemoveEntity(actor)
-	}
+func (actor *Actor) Hit(bullet *Bullet) {
+	// actor.HP -= bullet.Damage
+	actor.debug.AddInfo(fmt.Sprintf("Abstract actor Hit remain HP: %d\n", actor.HP))
+	// if actor.HP <= 0 {
+	// 	actor.game.Screen().Level().RemoveEntity(actor)
+	// }
 }
 
 func (actor *Actor) Draw(screen *tl.Screen) {
