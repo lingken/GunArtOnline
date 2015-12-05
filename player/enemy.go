@@ -1,6 +1,7 @@
 package player
 
 import (
+	"GunArtOnline/message"
 	"GunArtOnline/util"
 	tl "github.com/JoelOtter/termloop"
 	"math/rand"
@@ -12,9 +13,9 @@ type Enemy struct {
 	target []*Actor
 }
 
-func NewEnemy(name string, HP, MP, speed, posX, posY, hatred int) *Enemy {
+func NewEnemy(name string, HP, MP, speed, posX, posY, hatred int, game *tl.Game, debug *message.DebugInfo) *Enemy {
 	enemy := Enemy{
-		Actor:  *NewActor(name, HP, MP, speed, posX, posY),
+		Actor:  *NewActor(name, HP, MP, speed, posX, posY, game, debug),
 		hatred: hatred,
 		target: make([]*Actor, 0),
 	}

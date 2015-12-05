@@ -2,6 +2,7 @@ package weapon
 
 import (
 	"GunArtOnline/message"
+	"GunArtOnline/player"
 	"GunArtOnline/util"
 	tl "github.com/JoelOtter/termloop"
 )
@@ -10,7 +11,7 @@ type Bullet struct {
 	prevX     int
 	prevY     int
 	symbol    rune
-	damage    int
+	Damage    int
 	speed     int
 	direction util.Direction
 	entity    *tl.Entity
@@ -24,7 +25,7 @@ func NewBullet(posX, posY, damage, speed, rangeLeft int, direction util.Directio
 	bullet := Bullet{
 		prevX:     posX,
 		prevY:     posY,
-		damage:    damage,
+		Damage:    damage,
 		speed:     speed,
 		direction: direction,
 		rangeLeft: 30,
@@ -77,5 +78,8 @@ func (bullet *Bullet) Size() (int, int) {
 }
 
 func (bullet *Bullet) Collide(collision tl.Physical) {
+	if v, ok := collision.(*player.Actor); ok {
+		v.Hit(bullet)
+	}
 	bullet.game.Screen().Level().RemoveEntity(bullet)
 }

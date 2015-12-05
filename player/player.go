@@ -1,24 +1,19 @@
 package player
 
 import (
+	// "GunArtOnline"
 	"GunArtOnline/message"
 	"GunArtOnline/util"
-	"GunArtOnline/weapon"
 	tl "github.com/JoelOtter/termloop"
 )
 
 type Player struct {
 	Actor
-	game *tl.Game
-
-	debug *message.DebugInfo
 }
 
 func NewPlayer(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug *message.DebugInfo) *Player {
 	p := Player{
-		Actor: *NewActor(name, HP, MP, speed, posX, posY),
-		game:  game,
-		debug: debug,
+		Actor: *NewActor(name, HP, MP, speed, posX, posY, game, debug),
 	}
 	p.direction = util.Right
 	return &p

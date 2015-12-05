@@ -1,7 +1,9 @@
 package player
 
 import (
+	"GunArtOnline/message"
 	"GunArtOnline/util"
+	"GunArtOnline/weapon"
 	tl "github.com/JoelOtter/termloop"
 )
 
@@ -23,9 +25,11 @@ type Actor struct {
 	state     ActorState
 	prevX     int
 	prevY     int
+	game      *tl.Game
+	debug     *message.DebugInfo
 }
 
-func NewActor(name string, HP, MP, speed, posX, posY int) *Actor {
+func NewActor(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug *message.DebugInfo) *Actor {
 	actor := Actor{
 		name:   name,
 		HP:     HP,
@@ -35,10 +39,19 @@ func NewActor(name string, HP, MP, speed, posX, posY int) *Actor {
 		prevY:  posY,
 		state:  actorAlive,
 		entity: tl.NewEntity(posX, posY, 1, 1),
+		game:   game,
+		debug:  debug,
 	}
 	// use symbol to test
 	actor.entity.SetCell(0, 0, &tl.Cell{Fg: tl.ColorBlack, Ch: 'M'})
 	return &actor
+}
+
+func (actor *Actor) Hit(damage int) {
+	actor.HP -= damage
+	if actor.HP <= 0 {
+		actor.game.Screen().Level().RemoveEntity(actor)
+	}
 }
 
 func (actor *Actor) Draw(screen *tl.Screen) {
@@ -67,6 +80,6 @@ func (actor *Actor) Collide(collision tl.Physical) {
 	// x, y := collision.Position()
 	// nx, ny := actor.entity.Position()
 	// if x == nx && y == ny {
-	actor.entity.SetPosition(actor.prevX, actor.prevY)
+	// actor.entity.SetPosition(actor.prevX, actor.prevY)
 	// }
 }

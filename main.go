@@ -18,7 +18,7 @@ func main() {
 
 	level.AddEntity(debugInfo)
 
-	enemy := player.NewEnemy("Enemy", 100, 100, 20, 12, 5, 0)
+	enemy := player.NewEnemy("Enemy", 100, 100, 5, 12, 5, 0, game)
 	level.AddEntity(enemy)
 	game.Screen().SetLevel(level)
 	game.Start()
