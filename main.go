@@ -1,6 +1,7 @@
 package main
 
 import (
+	"GunArtOnline/message"
 	"GunArtOnline/player"
 	tl "github.com/JoelOtter/termloop"
 )
@@ -11,5 +12,10 @@ func main() {
 	level := tl.NewBaseLevel(tl.Cell{
 		Bg: tl.ColorWhite,
 	})
-	player
+	human := player.NewPlayer("Ken", 100, 100, 100, 10, 5)
+	level.AddEntity(human)
+	debugInfo := message.NewDebugInfo()
+	level.AddEntity(debugInfo)
+	game.Screen().SetLevel(level)
+	game.Start()
 }
