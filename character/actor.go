@@ -35,5 +35,7 @@ func NewActor(name string, HP, MP, speed, posX, posY int) *Actor {
 		state:  actorAlive,
 		entity: tl.NewEntity(posX, posY, 1, 1),
 	}
+	// use symbol to test
+	actor.entity.SetCell(0, 0, &tl.Cell{Fg: tl.ColorBlack, Ch: 'M'})
 	return &actor
 }

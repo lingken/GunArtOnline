@@ -1,6 +1,7 @@
 package main
 
 import (
+	"GunArtOnline/player"
 	tl "github.com/JoelOtter/termloop"
 )
 
@@ -10,5 +11,5 @@ func main() {
 	level := tl.NewBaseLevel(tl.Cell{
 		Bg: tl.ColorWhite,
 	})
-
+	player
 }
