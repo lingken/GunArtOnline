@@ -17,9 +17,10 @@ type Bullet struct {
 	rangeLeft int
 	frame     int
 	debug     *message.DebugInfo
+	game      *tl.Game
 }
 
-func NewBullet(posX, posY, damage, speed, rangeLeft int, direction util.Direction, debug *message.DebugInfo) *Bullet {
+func NewBullet(posX, posY, damage, speed, rangeLeft int, direction util.Direction, debug *message.DebugInfo, game *tl.Game) *Bullet {
 	bullet := Bullet{
 		prevX:     posX,
 		prevY:     posY,
@@ -30,6 +31,7 @@ func NewBullet(posX, posY, damage, speed, rangeLeft int, direction util.Directio
 		entity:    tl.NewEntity(posX, posY, 1, 1),
 		debug:     debug,
 		frame:     0,
+		game:      game,
 	}
 	bullet.entity.SetCell(0, 0, &tl.Cell{Fg: tl.ColorBlack, Ch: 'o'})
 	return &bullet
@@ -66,3 +68,15 @@ func (bullet *Bullet) Draw(s *tl.Screen) {
 }
 
 func (bullet *Bullet) Tick(event tl.Event) {}
+
+func (bullet *Bullet) Position() (int, int) {
+	return bullet.entity.Position()
+}
+
+func (bullet *Bullet) Size() (int, int) {
+	return bullet.entity.Size()
+}
+
+func (bullet *Bullet) Collide(collision tl.Physical) {
+	bullet.game.Screen().Level().RemoveEntity(bullet)
+}

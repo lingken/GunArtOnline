@@ -49,8 +49,24 @@ func (p *Player) Tick(event tl.Event) {
 		case tl.KeySpace:
 			// posX, posY, damage, speed, rangeLeft int, direction util.Direction
 			x, y := p.entity.Position()
-			bullet := weapon.NewBullet(x, y, 0, 0, 10, p.direction, p.debug)
-			p.game.Screen().AddEntity(bullet)
+			bX, bY := x, y
+			switch p.direction {
+			case util.Up:
+				bY -= 1
+				break
+			case util.Down:
+				bY += 1
+				break
+			case util.Left:
+				bX -= 1
+				break
+			case util.Right:
+				bX += 1
+				break
+			}
+			bullet := weapon.NewBullet(bX, bY, 0, 0, 10, p.direction, p.debug, p.game)
+			// p.game.Screen().AddEntity(bullet)
+			p.game.Screen().Level().AddEntity(bullet)
 		}
 	}
 }
