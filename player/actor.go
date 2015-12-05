@@ -47,3 +47,25 @@ func (actor *Actor) Draw(screen *tl.Screen) {
 func (actor *Actor) Tick(event tl.Event) {
 
 }
+
+func (actor *Actor) Position() (int, int) {
+	return actor.entity.Position()
+}
+
+func (actor *Actor) Size() (int, int) {
+	return actor.entity.Size()
+}
+
+func (actor *Actor) Collide(collision tl.Physical) {
+	// if _, ok := collision.(*tl.Rectangle); ok {
+	// 	actor.entity.SetPosition(actor.prevX, actor.prevY)
+	// 	// or if it is another mech
+	// } else if _, ok := collision.(*Enemy); ok {
+	// 	actor.entity.SetPosition(actor.prevX, actor.prevY)
+	// }
+	// x, y := collision.Position()
+	// nx, ny := actor.entity.Position()
+	// if x == nx && y == ny {
+	actor.entity.SetPosition(actor.prevX, actor.prevY)
+	// }
+}
