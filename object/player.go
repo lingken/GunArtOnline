@@ -6,6 +6,7 @@ import (
 	"GunArtOnline/util"
 	"fmt"
 	tl "github.com/JoelOtter/termloop"
+	//"strconv"
 )
 
 type Player struct {
@@ -33,6 +34,13 @@ func (p *Player) Hit(bullet *Bullet) {
 		if p.HP <= 0 {
 			p.state = actorDead
 			p.game.Screen().Level().RemoveEntity(p)
+
+			// NumPlayerMutex.Lock()
+			// NumPlayer -= 1
+			// numPlayerText := tl.NewText(0, 1, "Number of angels: "+strconv.Itoa(NumPlayer),
+			// 	tl.ColorMagenta, tl.ColorWhite)
+			// p.game.Screen().AddEntity(numPlayerText)
+			// NumPlayerMutex.Unlock()
 		}
 	}
 }

@@ -8,6 +8,12 @@ import (
 
 func main() {
 	game := tl.NewGame()
+
+	// NumEnemyMutex.Lock()
+	// NumPlayerMutex.Lock()
+	// build(NumEnemy, NumPlayer, game)
+	// NumEnemyMutex.Unlock()
+	// NumPlayerMutex.Unlock()
 	// Add a white background
 	level := tl.NewBaseLevel(tl.Cell{
 		Bg: tl.ColorWhite,
@@ -20,8 +26,18 @@ func main() {
 
 	enemy := object.NewEnemy("Enemy", 5, 100, 5, 12, 5, 0, game, debugInfo)
 	level.AddEntity(enemy)
-	enemy2 := object.NewEnemy("Enemy", 10, 100, 5, 12, 5, 0, game, debugInfo)
+	enemy2 := object.NewEnemy("Enemy", 10, 100, 5, 15, 5, 0, game, debugInfo)
 	level.AddEntity(enemy2)
 	game.Screen().SetLevel(level)
 	game.Start()
 }
+
+// func build(numEnemy, numPlayer int, game *tl.Game) {
+// 	numEnemyText := tl.NewText(0, 0, "Number of demons: "+strconv.Itoa(numEnemy),
+// 		tl.ColorMagenta, tl.ColorWhite)
+// 	game.Screen().AddEntity(numEnemyText)
+
+// 	numPlayerText := tl.NewText(0, 1, "Number of angels: "+strconv.Itoa(numPlayer),
+// 		tl.ColorMagenta, tl.ColorWhite)
+// 	game.Screen().AddEntity(numPlayerText)
+// }

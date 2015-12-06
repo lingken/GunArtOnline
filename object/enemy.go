@@ -6,6 +6,8 @@ import (
 	"fmt"
 	tl "github.com/JoelOtter/termloop"
 	"math/rand"
+	//"strconv"
+	//"sync"
 )
 
 type Enemy struct {
@@ -48,6 +50,14 @@ func (enemy *Enemy) Hit(bullet *Bullet) {
 		if enemy.HP <= 0 {
 			enemy.state = actorDead
 			enemy.game.Screen().Level().RemoveEntity(enemy)
+
+			// NumEnemyMutex.Lock()
+			// NumEnemy -= 1
+			// numEnemyText := tl.NewText(0, 0, "Number of demons: "+strconv.Itoa(NumEnemy),
+			// 	tl.ColorMagenta, tl.ColorWhite)
+			// enemy.game.Screen().AddEntity(numEnemyText)
+			// NumEnemyMutex.Unlock()
+
 		}
 	}
 }
