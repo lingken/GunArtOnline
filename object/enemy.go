@@ -57,6 +57,7 @@ func (enemy *Enemy) Draw(s *tl.Screen) {
 	enemy.prevX, enemy.prevY = enemy.entity.Position()
 	prevX, prevY := enemy.prevX, enemy.prevY
 
+	// no target: random walk
 	if enemy.target == nil {
 		switch rand.Int() % 4 {
 		case 0: // Up
@@ -76,10 +77,11 @@ func (enemy *Enemy) Draw(s *tl.Screen) {
 			enemy.direction = util.Right
 			break
 		}
-	} else {
+	} else { // with target: follow and attack the target
 		if v, ok := enemy.target.(*Player); ok {
 			targetX, targetY := v.Position()
 			newX, newY := prevX, prevY
+
 			if prevX < targetX {
 				newX = prevX + 1
 			} else if prevX > targetX {
@@ -90,9 +92,64 @@ func (enemy *Enemy) Draw(s *tl.Screen) {
 			} else if prevY > targetY {
 				newY = prevY - 1
 			}
+
 			enemy.entity.SetPosition(newX, newY)
+
+			// random shoot
+			bulletX, bulletY := enemy.Position()
+			bulletDirection, bulletX, bulletY := enemy.getDirection(bulletX, bulletY, targetX, targetY)
+
+			bullet := NewBullet(bulletX, bulletY, 1, 200, 10, bulletDirection, enemy, enemy.debug, enemy.game)
+			enemy.game.Screen().Level().AddEntity(bullet)
 		}
 	}
 
 	enemy.frame = 0
+}
+
+func (enemy *Enemy) getDirection(bulletX, bulletY, targetX, targetY int) (util.Direction, int, int) {
+	r := rand.Int() % 2
+
+	delX := targetX - bulletX
+	delY := targetY - bulletY
+
+	if delX > 0 && delY > 0 {
+		if r == 0 {
+			return util.Right, bulletX + 1, bulletY
+		} else {
+			return util.Down, bulletX, bulletY + 1
+		}
+	} else if delX > 0 && delY < 0 {
+		if r == 0 {
+			return util.Right, bulletX + 1, bulletY
+		} else {
+			return util.Up, bulletX, bulletY - 1
+		}
+	} else if delX < 0 && delY > 0 {
+		if r == 0 {
+			return util.Left, bulletX - 1, bulletY
+		} else {
+			return util.Down, bulletX, bulletY + 1
+		}
+	} else if delX < 0 && delY < 0 {
+		if r == 0 {
+			return util.Left, bulletX - 1, bulletY
+		} else {
+			return util.Up, bulletX, bulletY - 1
+		}
+	} else if delX == 0 {
+		if delY > 0 {
+			return util.Down, bulletX, bulletY + 1
+		} else {
+			return util.Up, bulletX, bulletY - 1
+		}
+	} else if delY == 0 {
+		if delX > 0 {
+			return util.Right, bulletX + 1, bulletY
+		} else {
+			return util.Left, bulletX - 1, bulletY
+		}
+	} else { // never reaches here
+		return util.None, bulletX, bulletY
+	}
 }
