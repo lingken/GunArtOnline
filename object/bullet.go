@@ -28,7 +28,7 @@ func NewBullet(posX, posY, damage, speed, rangeLeft int, direction util.Directio
 		Damage:    damage,
 		speed:     speed,
 		direction: direction,
-		rangeLeft: 30,
+		rangeLeft: rangeLeft,
 		entity:    tl.NewEntity(posX, posY, 1, 1),
 		source:    source,
 		debug:     debug,
