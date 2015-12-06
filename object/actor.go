@@ -35,9 +35,11 @@ type Actor struct {
 	game      *tl.Game
 	debug     *message.DebugInfo
 	Key       string
+	db        *util.Database
+	reg       *util.RegisterList
 }
 
-func NewActor(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug *message.DebugInfo) *Actor {
+func NewActor(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug *message.DebugInfo, db *util.Database, reg *util.RegisterList) *Actor {
 	actor := Actor{
 		name:   name,
 		HP:     HP,
@@ -50,6 +52,8 @@ func NewActor(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug *
 		game:   game,
 		debug:  debug,
 		Key:    name,
+		db:     db,
+		reg:    reg,
 	}
 	// use symbol to test
 	actor.entity.SetCell(0, 0, &tl.Cell{Fg: tl.ColorBlack, Ch: '👼'})
@@ -89,6 +93,8 @@ func (actor *Actor) Collide(collision tl.Physical) {
 	} else if _, ok := collision.(*Player); ok {
 		actor.entity.SetPosition(actor.prevX, actor.prevY)
 	}
+	// TODO update database?
+
 	// x, y := collision.Position()
 	// nx, ny := actor.entity.Position()
 	// if x == nx && y == ny {

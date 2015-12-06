@@ -17,9 +17,9 @@ type Enemy struct {
 	target interface{}
 }
 
-func NewEnemy(name string, HP, MP, speed, posX, posY, hatred int, game *tl.Game, debug *message.DebugInfo) *Enemy {
+func NewEnemy(name string, HP, MP, speed, posX, posY, hatred int, game *tl.Game, debug *message.DebugInfo, db *util.Database, reg *util.RegisterList) *Enemy {
 	enemy := Enemy{
-		Actor:  *NewActor(name, HP, MP, speed, posX, posY, game, debug),
+		Actor:  *NewActor(name, HP, MP, speed, posX, posY, game, debug, db, reg),
 		hatred: hatred,
 		// target: make([]*Actor, 0),
 	}

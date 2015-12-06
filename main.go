@@ -25,7 +25,7 @@ func main() {
 		Bg: tl.ColorWhite,
 	})
 	debugInfo := message.NewDebugInfo(db, reg)
-	human := object.NewPlayer("Ken", 12, 100, 100, 25, 10, game, debugInfo)
+	human := object.NewPlayer("Ken", 12, 100, 100, 25, 10, game, debugInfo, db, reg)
 
 	level.AddEntity(human)
 	db.Put(human.Key, *human)
@@ -35,12 +35,12 @@ func main() {
 	db.Put(debugInfo.Key, *debugInfo)
 	reg.Register("debugInfo")
 
-	enemy := object.NewEnemy("Enemy1", 5, 100, 5, 12, 5, 0, game, debugInfo)
+	enemy := object.NewEnemy("Enemy1", 5, 100, 0, 12, 5, 0, game, debugInfo, db, reg)
 	level.AddEntity(enemy)
 	db.Put(enemy.Key, *enemy)
 	reg.Register("Enemy1")
 
-	enemy2 := object.NewEnemy("Enemy2", 10, 100, 5, 15, 5, 0, game, debugInfo)
+	enemy2 := object.NewEnemy("Enemy2", 10, 100, 0, 15, 5, 0, game, debugInfo, db, reg)
 	level.AddEntity(enemy2)
 	db.Put(enemy2.Key, *enemy2)
 	reg.Register("Enemy2")

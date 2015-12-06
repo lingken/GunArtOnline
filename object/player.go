@@ -13,9 +13,9 @@ type Player struct {
 	Actor
 }
 
-func NewPlayer(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug *message.DebugInfo) *Player {
+func NewPlayer(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug *message.DebugInfo, db *util.Database, reg *util.RegisterList) *Player {
 	p := Player{
-		Actor: *NewActor(name, HP, MP, speed, posX, posY, game, debug),
+		Actor: *NewActor(name, HP, MP, speed, posX, posY, game, debug, db, reg),
 	}
 	p.direction = util.Right
 	return &p
@@ -30,10 +30,14 @@ func (p *Player) Hit(bullet *Bullet) {
 		} else {
 			p.debug.AddInfo(fmt.Sprintf("Player Hit remain HP: %d\n", p.HP))
 		}
+		// write operation; update database
+		p.db.Put(p.Key, *p)
 
 		if p.HP <= 0 {
 			p.state = actorDead
 			p.game.Screen().Level().RemoveEntity(p)
+			// remove entity from level; remove from local database
+			p.db.Remove(p.Key)
 
 			// NumPlayerMutex.Lock()
 			// NumPlayer -= 1
@@ -43,6 +47,15 @@ func (p *Player) Hit(bullet *Bullet) {
 			// NumPlayerMutex.Unlock()
 		}
 	}
+}
+
+func (p *Player) Draw(screen *tl.Screen) {
+	// read operation; fetch from database
+	tmp, _ := p.db.GetValue(p.Key)
+	val, _ := tmp.(Player)
+	*p = val
+	p.entity.Draw(screen)
+	// actor.entity.Draw(screen)
 }
 
 func (p *Player) Tick(event tl.Event) {
@@ -85,8 +98,10 @@ func (p *Player) Tick(event tl.Event) {
 				break
 			}
 			bullet := NewBullet(bX, bY, 1, 200, 10, p.direction, p, angel, p.debug, p.game)
-			// p.game.Screen().AddEntity(bullet)
+			// TODO add bullet to database!!
 			p.game.Screen().Level().AddEntity(bullet)
 		}
+		// write operation; update database
+		p.db.Put(p.Key, *p)
 	}
 }
