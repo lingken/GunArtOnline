@@ -43,7 +43,7 @@ func NewActor(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug *
 		debug:  debug,
 	}
 	// use symbol to test
-	actor.entity.SetCell(0, 0, &tl.Cell{Fg: tl.ColorBlack, Ch: 'M'})
+	actor.entity.SetCell(0, 0, &tl.Cell{Fg: tl.ColorBlack, Ch: '👼'})
 	return &actor
 }
 

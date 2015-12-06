@@ -21,7 +21,7 @@ func NewEnemy(name string, HP, MP, speed, posX, posY, hatred int, game *tl.Game,
 		hatred: hatred,
 		// target: make([]*Actor, 0),
 	}
-	enemy.entity.SetCell(0, 0, &tl.Cell{Fg: tl.ColorBlack, Ch: 'E'})
+	enemy.entity.SetCell(0, 0, &tl.Cell{Fg: tl.ColorBlack, Ch: '👿'})
 	return &enemy
 }
 
