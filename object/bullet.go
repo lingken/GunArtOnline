@@ -6,35 +6,50 @@ import (
 	tl "github.com/JoelOtter/termloop"
 )
 
+type SourceType int
+
+const (
+	angel SourceType = iota
+	demon
+)
+
 type Bullet struct {
-	prevX     int
-	prevY     int
-	symbol    rune
-	Damage    int
-	speed     int
-	direction util.Direction
-	entity    *tl.Entity
-	rangeLeft int
-	frame     int
-	source    interface{}
-	debug     *message.DebugInfo
-	game      *tl.Game
+	prevX      int
+	prevY      int
+	symbol     rune
+	Damage     int
+	speed      int
+	direction  util.Direction
+	entity     *tl.Entity
+	rangeLeft  int
+	frame      int
+	source     interface{}
+	sourceType SourceType
+	debug      *message.DebugInfo
+	game       *tl.Game
 }
 
-func NewBullet(posX, posY, damage, speed, rangeLeft int, direction util.Direction, source interface{}, debug *message.DebugInfo, game *tl.Game) *Bullet {
+func NewBullet(posX, posY, damage, speed, rangeLeft int, direction util.Direction, source interface{}, sourceType SourceType, debug *message.DebugInfo, game *tl.Game) *Bullet {
 	bullet := Bullet{
-		prevX:     posX,
-		prevY:     posY,
-		Damage:    damage,
-		speed:     speed,
-		direction: direction,
-		rangeLeft: rangeLeft,
-		entity:    tl.NewEntity(posX, posY, 1, 1),
-		source:    source,
-		debug:     debug,
-		game:      game,
+		prevX:      posX,
+		prevY:      posY,
+		Damage:     damage,
+		speed:      speed,
+		direction:  direction,
+		rangeLeft:  rangeLeft,
+		entity:     tl.NewEntity(posX, posY, 1, 1),
+		source:     source,
+		sourceType: sourceType,
+		debug:      debug,
+		game:       game,
 	}
-	bullet.entity.SetCell(0, 0, &tl.Cell{Fg: tl.ColorBlack, Ch: 'o'})
+
+	if sourceType == angel {
+		bullet.entity.SetCell(0, 0, &tl.Cell{Ch: '💧'})
+	} else {
+		bullet.entity.SetCell(0, 0, &tl.Cell{Ch: '🔥'})
+	}
+
 	return &bullet
 }
 

@@ -21,30 +21,32 @@ func NewEnemy(name string, HP, MP, speed, posX, posY, hatred int, game *tl.Game,
 		hatred: hatred,
 		// target: make([]*Actor, 0),
 	}
-	enemy.entity.SetCell(0, 0, &tl.Cell{Fg: tl.ColorBlack, Ch: '👿'})
+	enemy.entity.SetCell(0, 0, &tl.Cell{Ch: '👿'})
 	return &enemy
 }
 
 func (enemy *Enemy) Hit(bullet *Bullet) {
-	if enemy.target == bullet.source {
-		enemy.hatred += bullet.Damage
-	} else {
-		enemy.hatred -= bullet.Damage
-		if enemy.hatred < 0 {
-			enemy.hatred = -enemy.hatred
-			enemy.target = bullet.source
-		} else if enemy.hatred == 0 {
-			enemy.target = nil
+	if bullet.sourceType == angel {
+		if enemy.target == bullet.source {
+			enemy.hatred += bullet.Damage
+		} else {
+			enemy.hatred -= bullet.Damage
+			if enemy.hatred < 0 {
+				enemy.hatred = -enemy.hatred
+				enemy.target = bullet.source
+			} else if enemy.hatred == 0 {
+				enemy.target = nil
+			}
 		}
-	}
-	enemy.HP -= bullet.Damage
-	if v, ok := bullet.source.(*Player); ok {
-		enemy.debug.AddInfo(fmt.Sprintf("Enemy Hit remain HP: %d by %s\n", enemy.HP, v.name))
-	} else {
-		enemy.debug.AddInfo(fmt.Sprintf("Enemy Hit remain HP: %d\n", enemy.HP))
-	}
-	if enemy.HP <= 0 {
-		enemy.game.Screen().Level().RemoveEntity(enemy)
+		enemy.HP -= bullet.Damage
+		if v, ok := bullet.source.(*Player); ok {
+			enemy.debug.AddInfo(fmt.Sprintf("Enemy Hit remain HP: %d by %s\n", enemy.HP, v.name))
+		} else {
+			enemy.debug.AddInfo(fmt.Sprintf("Enemy Hit remain HP: %d\n", enemy.HP))
+		}
+		if enemy.HP <= 0 {
+			enemy.game.Screen().Level().RemoveEntity(enemy)
+		}
 	}
 }
 
@@ -99,7 +101,7 @@ func (enemy *Enemy) Draw(s *tl.Screen) {
 			bulletX, bulletY := enemy.Position()
 			bulletDirection, bulletX, bulletY := enemy.getDirection(bulletX, bulletY, targetX, targetY)
 
-			bullet := NewBullet(bulletX, bulletY, 1, 200, 10, bulletDirection, enemy, enemy.debug, enemy.game)
+			bullet := NewBullet(bulletX, bulletY, 1, 400, 10, bulletDirection, enemy, demon, enemy.debug, enemy.game)
 			enemy.game.Screen().Level().AddEntity(bullet)
 		}
 	}

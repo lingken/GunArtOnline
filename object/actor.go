@@ -51,7 +51,7 @@ func (actor *Actor) Hit(bullet *Bullet) {
 	// actor.HP -= bullet.Damage
 	actor.debug.AddInfo(fmt.Sprintf("Abstract actor Hit remain HP: %d\n", actor.HP))
 	// if actor.HP <= 0 {
-	// 	actor.game.Screen().Level().RemoveEntity(actor)
+	// 	actor.game.Screen().Level.RemoveEntity(actor)
 	// }
 }
 

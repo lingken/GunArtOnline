@@ -13,7 +13,7 @@ func main() {
 		Bg: tl.ColorWhite,
 	})
 	debugInfo := message.NewDebugInfo()
-	human := object.NewPlayer("Ken", 100, 100, 100, 10, 5, game, debugInfo)
+	human := object.NewPlayer("Ken", 100, 100, 100, 25, 10, game, debugInfo)
 	level.AddEntity(human)
 
 	level.AddEntity(debugInfo)

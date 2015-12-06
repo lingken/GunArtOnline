@@ -19,6 +19,10 @@ func NewPlayer(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug 
 	return &p
 }
 
+func (p *Player) Hit(bullet *Bullet) {
+
+}
+
 func (p *Player) Tick(event tl.Event) {
 	if event.Type == tl.EventKey {
 		p.prevX, p.prevY = p.entity.Position()
@@ -58,7 +62,7 @@ func (p *Player) Tick(event tl.Event) {
 				bX += 1
 				break
 			}
-			bullet := NewBullet(bX, bY, 1, 200, 10, p.direction, p, p.debug, p.game)
+			bullet := NewBullet(bX, bY, 1, 200, 10, p.direction, p, angel, p.debug, p.game)
 			// p.game.Screen().AddEntity(bullet)
 			p.game.Screen().Level().AddEntity(bullet)
 		}
