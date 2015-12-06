@@ -26,7 +26,11 @@ func NewEnemy(name string, HP, MP, speed, posX, posY, hatred int, game *tl.Game,
 
 func (enemy *Enemy) Hit(bullet *Bullet) {
 	enemy.HP -= bullet.Damage
-	enemy.debug.AddInfo(fmt.Sprintf("Enemy Hit remain HP: %d\n", enemy.HP))
+	if v, ok := bullet.source.(*Player); ok {
+		enemy.debug.AddInfo(fmt.Sprintf("Enemy Hit remain HP: %d by %s\n", enemy.HP, v.name))
+	} else {
+		enemy.debug.AddInfo(fmt.Sprintf("Enemy Hit remain HP: %d\n", enemy.HP))
+	}
 	if enemy.HP <= 0 {
 		enemy.game.Screen().Level().RemoveEntity(enemy)
 	}

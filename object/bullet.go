@@ -16,11 +16,12 @@ type Bullet struct {
 	entity    *tl.Entity
 	rangeLeft int
 	frame     int
+	source    interface{}
 	debug     *message.DebugInfo
 	game      *tl.Game
 }
 
-func NewBullet(posX, posY, damage, speed, rangeLeft int, direction util.Direction, debug *message.DebugInfo, game *tl.Game) *Bullet {
+func NewBullet(posX, posY, damage, speed, rangeLeft int, direction util.Direction, source interface{}, debug *message.DebugInfo, game *tl.Game) *Bullet {
 	bullet := Bullet{
 		prevX:     posX,
 		prevY:     posY,
@@ -29,6 +30,7 @@ func NewBullet(posX, posY, damage, speed, rangeLeft int, direction util.Directio
 		direction: direction,
 		rangeLeft: 30,
 		entity:    tl.NewEntity(posX, posY, 1, 1),
+		source:    source,
 		debug:     debug,
 		game:      game,
 	}
