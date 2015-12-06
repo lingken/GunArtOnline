@@ -26,6 +26,7 @@ func NewEnemy(name string, HP, MP, speed, posX, posY, hatred int, game *tl.Game,
 }
 
 func (enemy *Enemy) Hit(bullet *Bullet) {
+	// only bullets from player can hurt enemy
 	if bullet.sourceType == angel {
 		if enemy.target == bullet.source {
 			enemy.hatred += bullet.Damage
@@ -45,6 +46,7 @@ func (enemy *Enemy) Hit(bullet *Bullet) {
 			enemy.debug.AddInfo(fmt.Sprintf("Enemy Hit remain HP: %d\n", enemy.HP))
 		}
 		if enemy.HP <= 0 {
+			enemy.state = actorDead
 			enemy.game.Screen().Level().RemoveEntity(enemy)
 		}
 	}
@@ -97,12 +99,16 @@ func (enemy *Enemy) Draw(s *tl.Screen) {
 
 			enemy.entity.SetPosition(newX, newY)
 
-			// random shoot
-			bulletX, bulletY := enemy.Position()
-			bulletDirection, bulletX, bulletY := enemy.getDirection(bulletX, bulletY, targetX, targetY)
+			// shoot player if player is alive
+			if v.state == actorAlive {
+				bulletX, bulletY := enemy.Position()
+				bulletDirection, bulletX, bulletY := enemy.getDirection(bulletX, bulletY, targetX, targetY)
 
-			bullet := NewBullet(bulletX, bulletY, 1, 400, 10, bulletDirection, enemy, demon, enemy.debug, enemy.game)
-			enemy.game.Screen().Level().AddEntity(bullet)
+				bullet := NewBullet(bulletX, bulletY, 1, 400, 10, bulletDirection, enemy, demon, enemy.debug, enemy.game)
+				enemy.game.Screen().Level().AddEntity(bullet)
+			} else {
+				enemy.target = nil
+			}
 		}
 	}
 

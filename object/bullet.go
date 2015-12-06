@@ -97,5 +97,9 @@ func (bullet *Bullet) Collide(collision tl.Physical) {
 	if v, ok := collision.(*Enemy); ok {
 		v.Hit(bullet)
 	}
+
+	if v, ok := collision.(*Player); ok {
+		v.Hit(bullet)
+	}
 	bullet.game.Screen().Level().RemoveEntity(bullet)
 }

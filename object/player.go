@@ -4,6 +4,7 @@ import (
 	// "GunArtOnline"
 	"GunArtOnline/message"
 	"GunArtOnline/util"
+	"fmt"
 	tl "github.com/JoelOtter/termloop"
 )
 
@@ -20,7 +21,20 @@ func NewPlayer(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug 
 }
 
 func (p *Player) Hit(bullet *Bullet) {
+	// only bullets from enemy can hurt player
+	if bullet.sourceType == demon {
+		p.HP -= bullet.Damage
+		if v, ok := bullet.source.(*Enemy); ok {
+			p.debug.AddInfo(fmt.Sprintf("Player Hit remain HP: %d by %s\n", p.HP, v.name))
+		} else {
+			p.debug.AddInfo(fmt.Sprintf("Player Hit remain HP: %d\n", p.HP))
+		}
 
+		if p.HP <= 0 {
+			p.state = actorDead
+			p.game.Screen().Level().RemoveEntity(p)
+		}
+	}
 }
 
 func (p *Player) Tick(event tl.Event) {
