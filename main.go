@@ -3,6 +3,7 @@ package main
 import (
 	"GunArtOnline/message"
 	"GunArtOnline/object"
+	"GunArtOnline/util"
 	tl "github.com/JoelOtter/termloop"
 )
 
@@ -15,6 +16,11 @@ func main() {
 	// NumEnemyMutex.Unlock()
 	// NumPlayerMutex.Unlock()
 	// Add a white background
+
+	// immitate PAXOS storage
+	db := util.NewDatabase()
+	reg := util.NewRegisterList()
+
 	level := tl.NewBaseLevel(tl.Cell{
 		Bg: tl.ColorWhite,
 	})
@@ -24,9 +30,9 @@ func main() {
 
 	level.AddEntity(debugInfo)
 
-	enemy := object.NewEnemy("Enemy", 5, 100, 5, 12, 5, 0, game, debugInfo)
+	enemy := object.NewEnemy("Enemy1", 5, 100, 5, 12, 5, 0, game, debugInfo)
 	level.AddEntity(enemy)
-	enemy2 := object.NewEnemy("Enemy", 10, 100, 5, 15, 5, 0, game, debugInfo)
+	enemy2 := object.NewEnemy("Enemy2", 10, 100, 5, 15, 5, 0, game, debugInfo)
 	level.AddEntity(enemy2)
 	game.Screen().SetLevel(level)
 	game.Start()

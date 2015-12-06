@@ -19,3 +19,7 @@ func (db *Database) GetValue(key string) (interface{}, bool) {
 	val, ok := db.database[key]
 	return val, ok
 }
+
+func (db *Database) Remove(key string) {
+	delete(db.database, key)
+}
