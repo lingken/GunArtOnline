@@ -24,16 +24,27 @@ func main() {
 	level := tl.NewBaseLevel(tl.Cell{
 		Bg: tl.ColorWhite,
 	})
-	debugInfo := message.NewDebugInfo()
+	debugInfo := message.NewDebugInfo(db, reg)
 	human := object.NewPlayer("Ken", 12, 100, 100, 25, 10, game, debugInfo)
+
 	level.AddEntity(human)
+	db.Put(human.Key, *human)
+	reg.Register("Ken")
 
 	level.AddEntity(debugInfo)
+	db.Put(debugInfo.Key, *debugInfo)
+	reg.Register("debugInfo")
 
 	enemy := object.NewEnemy("Enemy1", 5, 100, 5, 12, 5, 0, game, debugInfo)
 	level.AddEntity(enemy)
+	db.Put(enemy.Key, *enemy)
+	reg.Register("Enemy1")
+
 	enemy2 := object.NewEnemy("Enemy2", 10, 100, 5, 15, 5, 0, game, debugInfo)
 	level.AddEntity(enemy2)
+	db.Put(enemy2.Key, *enemy2)
+	reg.Register("Enemy2")
+
 	game.Screen().SetLevel(level)
 	game.Start()
 }

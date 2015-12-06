@@ -34,6 +34,7 @@ type Actor struct {
 	prevY     int
 	game      *tl.Game
 	debug     *message.DebugInfo
+	Key       string
 }
 
 func NewActor(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug *message.DebugInfo) *Actor {
@@ -48,6 +49,7 @@ func NewActor(name string, HP, MP, speed, posX, posY int, game *tl.Game, debug *
 		entity: tl.NewEntity(posX, posY, 1, 1),
 		game:   game,
 		debug:  debug,
+		Key:    name,
 	}
 	// use symbol to test
 	actor.entity.SetCell(0, 0, &tl.Cell{Fg: tl.ColorBlack, Ch: '👼'})
