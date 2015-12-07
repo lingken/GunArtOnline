@@ -9,11 +9,6 @@ import (
 	//"sync"
 )
 
-// var NumEnemy int = 2
-// var NumEnemyMutex sync.Mutex
-// var NumPlayer int = 1
-// var NumPlayerMutex sync.Mutex
-
 type ActorState int
 
 const (

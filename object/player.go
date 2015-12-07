@@ -38,13 +38,6 @@ func (p *Player) Hit(bullet *Bullet) {
 			p.game.Screen().Level().RemoveEntity(p)
 			// remove entity from level; remove from local database
 			p.db.Remove(p.Key)
-
-			// NumPlayerMutex.Lock()
-			// NumPlayer -= 1
-			// numPlayerText := tl.NewText(0, 1, "Number of angels: "+strconv.Itoa(NumPlayer),
-			// 	tl.ColorMagenta, tl.ColorWhite)
-			// p.game.Screen().AddEntity(numPlayerText)
-			// NumPlayerMutex.Unlock()
 		}
 	}
 }
@@ -97,7 +90,7 @@ func (p *Player) Tick(event tl.Event) {
 				bX += 1
 				break
 			}
-			bullet := NewBullet(bX, bY, 1, 200, 10, p.direction, p, angel, p.debug, p.game)
+			bullet := NewBullet(bX, bY, 1, 1000, 10, p.direction, p, angel, p.debug, p.game)
 			// TODO add bullet to database!!
 			p.game.Screen().Level().AddEntity(bullet)
 		}

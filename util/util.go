@@ -11,3 +11,8 @@ const (
 )
 
 const Timeconst = 100000
+const ReferenceSpeed = 100
+
+func GenerateKey(primeKey, attribute string) string {
+	return primeKey + "_" + attribute
+}
